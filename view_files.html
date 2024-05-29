@@ -8,11 +8,20 @@
       body {
         background-image: url("https://raw.githubusercontent.com/LaiLaGiang/lailagiang.github.io/main/background1.jpg");
       }
+      #fileList {
+        margin-top: 20px;
+      }
+      .file-item {
+        margin-bottom: 10px;
+      }
+      .file-item a {
+        margin-left: 10px;
+      }
     </style>
 </head>
 <body>
     <h1>LaiLaGiang By 4Lua</h1>
-    <div id="fileList"> <br> </div> 
+    <div id="fileList"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -20,37 +29,27 @@
             for (let i = 0; i < localStorage.length; i++) {
                 const fileName = localStorage.key(i);
                 const content = localStorage.getItem(fileName);
-                const downloadButton = createDownloadButton(fileName, content);
-                fileList.appendChild(downloadButton);
+                const listItem = createListItem(fileName, content);
+                fileList.appendChild(listItem);
             }
         });
 
-        function createDownloadButton(fileName, content) {
-            const button = document.createElement('button');
-            button.innerText = fileName;
-            button.addEventListener('click', function() {
-                const blob = base64ToBlob(content);
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = fileName;
-                link.innerText = 'Download'; // Thêm text cho nút tải xuống
-                link.style.display = 'block'; // Hiển thị nút tải xuống dưới dạng block
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            });
-            return button;
-        }
-
-        function base64ToBlob(base64) {
-            const byteCharacters = atob(base64.split(',')[1]);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-                byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
-            return new Blob([byteArray]);
+        function createListItem(fileName, content) {
+            const listItem = document.createElement('div');
+            listItem.classList.add('file-item');
+            
+            const fileNameSpan = document.createElement('span');
+            fileNameSpan.textContent = fileName;
+            
+            const downloadLink = document.createElement('a');
+            downloadLink.href = content;
+            downloadLink.download = fileName;
+            downloadLink.innerText = 'Download';
+            
+            listItem.appendChild(fileNameSpan);
+            listItem.appendChild(downloadLink);
+            
+            return listItem;
         }
     </script>
 </body>
