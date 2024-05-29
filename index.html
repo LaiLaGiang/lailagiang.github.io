@@ -7,24 +7,11 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="login-container" class="container">
-        <h2 style="color: blue;">LaiLaGiang By 4Lua</h2>
-        <form id="login-form">
-            <div class="input-group">
-                <label for="username">Tai Khoan</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Mat Khau</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Dang nhap</button>
-        </form>
-    </div>
-
+    <h1>File Upload and Download</h1>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Upload File</button>
     <div id="fileList"></div>
-    <button id="saveButton" style="display: none;">Save</button> <!-- Thêm nút Save -->
-    
+
     <script src="script.js"></script>
 </body>
 </html>
