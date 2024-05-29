@@ -70,8 +70,7 @@ function updateFile(event) {
     fileInput.removeEventListener('change', updateFile);
 }
 
-// Thêm sự kiện cho nút Save
-const saveButton = document.getElementById('saveButton');
-saveButton.addEventListener('click', function() {
-    window.location.href = 'view_files.html'; // Chuyển đến trang view_files.html khi click vào nút Save
-});
+// Thêm hàm để chuyển đến trang view files khi click vào nút "View Files"
+function viewFiles() {
+    window.location.href = 'view_files.html';
+}
