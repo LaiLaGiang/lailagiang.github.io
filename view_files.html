@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Files</title>
+</head>
+<body>
+    <h2>View Uploaded Files</h2>
+    <div id="fileList"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileList = document.getElementById('fileList');
+            for (let i = 0; i < localStorage.length; i++) {
+                const fileName = localStorage.key(i);
+                const downloadButton = createDownloadButton(fileName);
+                fileList.appendChild(downloadButton);
+            }
+        });
+
+        function createDownloadButton(fileName) {
+            const button = document.createElement('button');
+            button.innerText = fileName;
+            button.addEventListener('click', function() {
+                const content = localStorage.getItem(fileName);
+                const blob = base64ToBlob(content);
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+            return button;
+        }
+
+        function base64ToBlob(base64) {
+            const byteCharacters = atob(base64.split(',')[1]);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            return new Blob([byteArray]);
+        }
+    </script>
+</body>
+</html>
