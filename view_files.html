@@ -14,21 +14,23 @@
             const fileList = document.getElementById('fileList');
             for (let i = 0; i < localStorage.length; i++) {
                 const fileName = localStorage.key(i);
-                const downloadButton = createDownloadButton(fileName);
+                const content = localStorage.getItem(fileName);
+                const downloadButton = createDownloadButton(fileName, content);
                 fileList.appendChild(downloadButton);
             }
         });
 
-        function createDownloadButton(fileName) {
+        function createDownloadButton(fileName, content) {
             const button = document.createElement('button');
             button.innerText = fileName;
             button.addEventListener('click', function() {
-                const content = localStorage.getItem(fileName);
                 const blob = base64ToBlob(content);
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
                 link.download = fileName;
+                link.innerText = 'Download'; // Thêm text cho nút tải xuống
+                link.style.display = 'block'; // Hiển thị nút tải xuống dưới dạng block
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
